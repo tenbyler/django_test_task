@@ -1,0 +1,38 @@
+{% extends 'tasks/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <div class="content-section">
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.media }} 
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">
+        {% if calling_view == 'task-create' %}Create a task
+        {% elif calling_view == 'task-update' %}Update the task
+        {% elif calling_view == 'task-complete' %}Complete the task
+        {% endif %}
+        </legend>
+        {% if calling_view != 'task-complete' %}
+            {{ form.title|as_crispy_field }}
+            {{ form.content|as_crispy_field }}
+            {{ form.completer|as_crispy_field }}
+        {% else %}
+            {{ form|crispy }}
+        {% endif %}
+      </fieldset>
+
+      <fieldset class="form-group">
+        <div class="mb-2 m2-4">{{ form.due_date.label }}</div>
+        <div style="display: flex;">
+        {% for subwidget in form.due_date.subwidgets %}
+            {{ subwidget }}
+        {% endfor %}
+        </div>
+      </fieldset>
+      <br />
+      <div class="form-group">
+        <button class="btn btn-outline-info mb-2" type="submit">Post</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}
