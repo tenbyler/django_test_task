@@ -2,14 +2,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
         rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link
@@ -17,7 +15,6 @@
         type="text/css"
         href="{% static 'tasks/main.css' %}"
     />
-
 
     {% if title %}
     <title>Tasks app - {{ title }}</title>
@@ -46,7 +43,7 @@
               <a class="nav-item nav-link" href="{% url 'tasks-home' %}">Open Tasks</a>
               <a class="nav-item nav-link ms-2" href="{% url 'tasks-completed' %}">Completed Tasks</a>
             </div>
-            <!-- Navbar Right Side -->
+            <!-- Navbar shows the needed items based on the User role and status -->
             <div class="navbar-nav">
                 {% if user.is_authenticated %}
                     {% if user.role == user.CREATOR %}
@@ -72,6 +69,7 @@
           {% else %}
           <div class="col-md-8" style="position:absolute; left: 50%; transform: translate(-50%)">
           {% endif %}
+            <!-- Show the alerts when needed -->
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-{{ message.tags }}">
@@ -81,10 +79,13 @@
             {% endif %}
             {% block content %}{% endblock %}
           </div>
+          <!-- Filters will be shown only on the pages that need it -->
           {% if need_filter %}
           <div class="col-md-4">
             <div class="content-section">
                   <form method="get">
+                    <!-- There will be either filter by creation or 
+                        completion date based on which page is being shown -->
                     {% if need_filter == 'created' %}
                         <div class="mb-2 m2-4 mt-2">Filter by creation date:</div>
                     {% elif need_filter == 'completed' %}

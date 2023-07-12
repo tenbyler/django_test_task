@@ -9,6 +9,7 @@ from users.models import User
 def one_day_after():
     return timezone.now() + timedelta(1)
 
+# This is a db model for the tasks
 class Task(models.Model):
     OPEN = 1
     IN_PROGRESS = 2
@@ -26,9 +27,13 @@ class Task(models.Model):
     due_date = models.DateTimeField(default=one_day_after)
     author = models.ForeignKey(User, on_delete=models.SET("deleted user"), related_name = "author")
     status = models.PositiveSmallIntegerField(choices=TASK_STATUS, default=OPEN)
+    
+    # This field allows to assign the task to a specific User (as long as the user is a COMPLETER)
     completer = models.ForeignKey(User, limit_choices_to={'role': User.COMPLETER}, on_delete=models.SET("deleted user"), 
                                   blank=True, null=True, verbose_name = "Completer", 
                                   related_name = "completer")
+    
+    # These fields will be used when the task is completed
     date_completed = models.DateTimeField(blank=True, null=True)
     completion_comment = models.TextField(blank=True, null=True)
 

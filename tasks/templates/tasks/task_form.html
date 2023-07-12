@@ -7,11 +7,14 @@
       {{ form.media }} 
       <fieldset class="form-group">
         <legend class="border-bottom mb-4">
+        <!-- Same form used for multiple purposes -->
         {% if calling_view == 'task-create' %}Create a task
         {% elif calling_view == 'task-update' %}Update the task
         {% elif calling_view == 'task-complete' %}Complete the task
         {% endif %}
         </legend>
+        <!-- Since the form also has the subwidgets, which I customize, 
+            I need to manually show each field -->
         {% if calling_view != 'task-complete' %}
             {{ form.title|as_crispy_field }}
             {{ form.content|as_crispy_field }}
@@ -24,6 +27,8 @@
       <fieldset class="form-group">
         <div class="mb-2 m2-4">{{ form.due_date.label }}</div>
         <div style="display: flex;">
+        <!-- The date input form consists of multiple subwidgets,
+             so to show them properly I have to do it one by one -->
         {% for subwidget in form.due_date.subwidgets %}
             {{ subwidget }}
         {% endfor %}

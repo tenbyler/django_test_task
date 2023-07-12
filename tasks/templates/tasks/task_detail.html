@@ -7,12 +7,14 @@
             <a class="me-2" href="{% url 'user-tasks' object.author.username %}">{{ object.author }}</a>
             <p class="text-muted">Due date: {{ object.due_date|date:"H:i j M, Y" }} | </small>
             <small class="text-muted">Created at: {{ object.date_posted|date:"H:i j M, Y" }}</small>
+            <!-- Can be updated by the creator of the task only -->
             {% if object.author == user %}
             <br />
             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'task-update' object.id %}">Update task</a>
             <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'task-delete' object.id %}">Delete task</a>
             {% endif %}
             
+            <!-- Tasks completion button shown to COMPLETERs and only when it isn't already completed -->
             {% if user.role == user.COMPLETER and object.status == task.OPEN %}
             <a class="btn btn-success btn-sm mt-1 mb-1" href="{% url 'task-complete' object.id %}">Complete task</a>
             {% endif %}

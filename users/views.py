@@ -3,6 +3,8 @@ from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 
+
+# this function provides the view for the "Register" page, handled by the "render" call
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -16,7 +18,9 @@ def register(request):
     return render(request, 'users/register.html', {'form': form})
 
 
-@login_required
+# this function provides the view for "Profile" page, handled by the "render" call
+# it allows to update both the Profile and User objects 
+@login_required # only shown when the user is logged in
 def profile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)

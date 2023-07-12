@@ -13,6 +13,7 @@
         {% csrf_token %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Profile update</legend>
+            <!-- Need 2 forms here because both the profile and user objects will be updated -->
             {{ u_form|crispy }}
             {{ p_form|crispy }}
         </fieldset>

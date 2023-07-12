@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Profile, User
 
 
+# this adds roles to the standard UserCreationForm
 class UserRegisterForm(UserCreationForm):
     ROLES = ((1, u"Creator"),
              (2, u"Completer"))
@@ -15,6 +16,7 @@ class UserRegisterForm(UserCreationForm):
         fields = ['username', 'email', 'role', 'password1', 'password2']
 
 
+# this adds roles to the standard update form
 class UserUpdateForm(forms.ModelForm):
     ROLES = ((1, u"Creator"),
              (2, u"Completer"))
@@ -27,6 +29,7 @@ class UserUpdateForm(forms.ModelForm):
         fields = ['username', 'email', 'role']
 
 
+# this allows to update profile image
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
